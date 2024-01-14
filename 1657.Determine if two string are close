@@ -1,0 +1,46 @@
+import java.util.*;
+ class Solution {
+    public boolean closeStrings(String word1, String word2) {
+        if (word1.length() != word2.length()) {
+            return false;
+        }
+
+        int[] arr1 = new int[26]; //  Assuming only lowercase English letters (where assume 'a' will refer index 0, 'b' is refering index 1,'c' is refering index '2' and so on)
+        int[] arr2 = new int[26];  //  Assuming only lowercase English letters (where assume 'a' will refer index 0, 'b' is refering index 1,'c' is refering index '2' and so on)
+
+
+        for (int i = 0; i < word1.length(); i++) {
+            char c1 = word1.charAt(i);
+            char c2 = word2.charAt(i);
+
+            int index1 = c1 - 'a';  // ex when c1='a' then index will be 97-97=0 ,for c1='b'  index=98-97=1   so on so for......................
+            int index2 = c2 - 'a';  //
+
+            arr1[index1]=arr1[index1]+1;   //  as we assume that each charecter has unique index in arr1 and arr2 (ex:- 'a' has index 0, 'b' has index 1  and so on ....) so
+                                 // after geting the index ,we go to that index and increment the value in it by 1 (thats how we will calculate the frequency of each charecter  )
+                                    // and also can determine that a charecter is present in both siring or not (we compare both array by i'th index ,if thw value in i'th index of both array is
+            arr2[index2]= arr2[index2]+1;  //
+        }
+// for check the a particular character present in both string or not
+        for (int i = 0; i < 26; i++) {
+            if ((arr1[i] == 0 && arr2[i] != 0) || (arr1[i] != 0 && arr2[i] == 0)) {  // ex:  arr1[0] and arr2[0] represents 'a' ,if arr1[0]==0  a is not present in arr1  similarly for arr2...  and now compare both arr1 and arr2 for the presence of a particular character present in both array or not
+                return false;
+            }
+        }
+
+        // Sort the frequencies arrays
+        Arrays.sort(arr1);
+        Arrays.sort(arr2);
+
+        // Check if the frequencies of each character are the same
+        return Arrays.equals(arr1, arr2);
+    }
+}
+public class test {
+     public static void main(String... args){
+         String s1="cabbba";
+         String s2= "abbccc";
+         Solution sl=new Solution();
+         System.out.println(sl.closeStrings(s1,s2));
+     }
+}
